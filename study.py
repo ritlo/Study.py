@@ -3,24 +3,24 @@ import time
 import pyttsx3
 import datetime
 import threading
-def scroll():
-    global sd
-    while True:
-        try:
-            should = input("Scroll? Y/N \n")
-            should = should.lower()
-            if should == "n":
-                sd = False
-                break
-            elif should == "y":
-                sd = True
-                break
-            else:
-                raise Exception("Try again")
-        except:
-            continue        
-scroll()
-i = int(input("Interval in seconds\n"))
+
+while True:
+    try:
+        should = input("Scroll? Y/N \n")
+        i = int(input("Interval in seconds\n"))
+        should = should.lower()
+        if should == "n" and isinstance(i,int):
+            sd = False
+            break
+        elif should == "y" and isinstance(i,int):
+            sd = True
+            break
+        else:
+            raise Exception("Try again")
+    except:
+        print("Try Again")
+        continue        
+
 t = datetime.datetime.now()
 td = datetime.timedelta(hours=t.hour, minutes=t.minute, seconds=t.second)
 
