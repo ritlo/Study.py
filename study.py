@@ -6,13 +6,13 @@ import threading
 
 while True:
     try:
-        should = input("Scroll? Y/N \n")
-        i = int(input("Interval in seconds\n"))
-        should = should.lower()
-        if should == "n" and isinstance(i,int):
+        shouldScroll = input("Scroll? Y/N \n")
+        interval = int(input("Interval in seconds\n"))
+        shouldScroll = shouldScroll.lower()
+        if shouldScroll == "n" and isinstance(interval,int):
             sd = False
             break
-        elif should == "y" and isinstance(i,int):
+        elif shouldScroll == "y" and isinstance(interval,int):
             sd = True
             break
         else:
@@ -21,12 +21,12 @@ while True:
         print("Try Again")
         continue        
 
-t = datetime.datetime.now()
-td = datetime.timedelta(hours=t.hour, minutes=t.minute, seconds=t.second)
+startTime = datetime.datetime.now()
+startTimeDelta = datetime.timedelta(hours=startTime.hour, minutes=startTime.minute, seconds=startTime.second)
 
 def speak(hrs, mins, secs):
     engine = pyttsx3.init()
-    engine.say("Time")
+    engine.say(" ")
     if hrs > 0:
         if hrs > 1:
             engine.say(f"{hrs} Hours")
@@ -46,15 +46,15 @@ def speak(hrs, mins, secs):
 
 while True:
 
-    ti = datetime.datetime.now()
-    tid = datetime.timedelta(hours=ti.hour, minutes=ti.minute, seconds=ti.second)
-    tx = tid - td
-    secs = tx.seconds % 60
-    hrs = tx.seconds // 3600
-    mins = (tx.seconds // 60) % 60
+    presentTime = datetime.datetime.now()
+    presentTimeDelta = datetime.timedelta(hours=presentTime.hour, minutes=presentTime.minute, seconds=presentTime.second)
+    elapsed = presentTimeDelta - startTimeDelta
+    secs = elapsed.seconds % 60
+    hrs = elapsed.seconds // 3600
+    mins = (elapsed.seconds // 60) % 60
     # print(f"{hrs} {mins} {secs}")
-    th = threading.Thread(target=speak, args=(hrs, mins, secs))
+    speechthread = threading.Thread(target=speak, args=(hrs, mins, secs))
     if sd:
         keyboard.press_and_release("page down")
-    th.start()
-    time.sleep(i)
+    speechthread.start()
+    time.sleep(interval)
