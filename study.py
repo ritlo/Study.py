@@ -26,7 +26,6 @@ startTimeDelta = datetime.timedelta(hours=startTime.hour, minutes=startTime.minu
 
 def speak(hrs, mins, secs):
     engine = pyttsx3.init()
-    engine.say(" ")
     if hrs > 0:
         if hrs > 1:
             engine.say(f"{hrs} Hours")
